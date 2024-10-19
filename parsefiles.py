@@ -1,25 +1,14 @@
 import os
 import csv
 from config import *
+import pickle
 
-# DATAPATH = './data'
 
-def getFiles(DATAPATH):
+with open("filelist.pkl", 'rb') as f:
+    filelist = pickle.load(f)
 
-    files = []
+print(f"Loaded filelist, there are {len(filelist)} files")
 
-    for dirpath, dirnames, filenames in os.walk(DATAPATH
-):        
-        for dirname in dirnames:
-            getFiles(dirname)
-        dirpath = dirpath.replace('\\', '/')
-        for filename in filenames:
-            files.append(dirpath + '/' + filename)
-            # print(f"File: {dirpath}/{filename}")
-
-    return files
-
-filelist = getFiles(DATAPATH)
 
 # Headers
 # 0 hr - HOUR
