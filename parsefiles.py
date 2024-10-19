@@ -20,7 +20,7 @@ def getFiles(datapath):
 filelist = getFiles(datapath)
 
 # Headers
-# 0 hr
+# 0 hr - HOUR
 # 1 subject_id
 # 2 hadm_id
 # 3 stay_id
@@ -210,8 +210,6 @@ def cleanRow(row: list):
         mbp = getval(mbp_ni)
     else:
         mbp = 0
-    
-
 
     # Clean up gender
     if gender == "F":
@@ -243,23 +241,56 @@ for fname in filelist:
     next(reader)
     
     # Get static features
-    row = next(reader)
-    cleanline = cleanRow(row)
+    # row = next(reader)
+    # cleanline = cleanRow(row)
 
-    [ hr, invasive, noninvasive, highflow, discharge_outcome, icuouttime_outcome, death_outcome, 
-    elixhauser_vanwalraven, gcs, gcs_motor, gcs_verbal, gcs_eyes, gender, age, anchor_year, race, 
-    first_careunit, los, pinsp_draeger, pinsp_hamilton, ppeak, set_peep, total_peep, pcv_level, rr, set_rr,
-    total_rr, set_tv, total_tv, set_fio2, set_ie_ratio, set_pc_draeger, set_pc, height, weight, 
-    calculated_bicarbonate, pCO2, pH, pO2, so2, vasopressor, crrt, heart_rate, sbp, dbp, mbp, temperature,
-    spo2, glucose, sepsis3, sofa ] = cleanline
+    # [ hr, invasive, noninvasive, highflow, discharge_outcome, icuouttime_outcome, death_outcome, 
+    # elixhauser_vanwalraven, gcs, gcs_motor, gcs_verbal, gcs_eyes, gender, age, anchor_year, race, 
+    # first_careunit, los, pinsp_draeger, pinsp_hamilton, ppeak, set_peep, total_peep, pcv_level, rr, set_rr,
+    # total_rr, set_tv, total_tv, set_fio2, set_ie_ratio, set_pc_draeger, set_pc, height, weight, 
+    # calculated_bicarbonate, pCO2, pH, pO2, sO2, vasopressor, crrt, heart_rate, sbp, dbp, mbp, temperature,
+    # spo2, glucose, sepsis3, sofa ] = cleanline
+
+
+    invasive = 0
+    noninvasive = 0
+
+    ventilated = False
+
+    # Wait until ventilated
+    while not ventilated:
+        # Readline
+        try:
+            row = next(reader)
+            cleanline = cleanRow(row)
+
+            [ hr, invasive, noninvasive, highflow, discharge_outcome, icuouttime_outcome, death_outcome, 
+            elixhauser_vanwalraven, gcs, gcs_motor, gcs_verbal, gcs_eyes, gender, age, anchor_year, race, 
+            first_careunit, los, pinsp_draeger, pinsp_hamilton, ppeak, set_peep, total_peep, pcv_level, rr, set_rr,
+            total_rr, set_tv, total_tv, set_fio2, set_ie_ratio, set_pc_draeger, set_pc, height, weight, 
+            calculated_bicarbonate, pCO2, pH, pO2, sO2, vasopressor, crrt, heart_rate, sbp, dbp, mbp, temperature,
+            spo2, glucose, sepsis3, sofa ] = cleanline
+        except StopIteration:
+            break
+        ventilated = (invasive + noninvasive != 0)
+
+    if ventilated:
+        print(fname)
     
-    static_states = [gender, age, height, weight]
+        static_states = [gender, age, height, weight]
 
-    print (static_states)
+        print (static_states)
 
-    # print (line)
+        features = [heart_rate, mbp, spo2 , gcs, elixhauser_vanwalraven, ]
 
-    break
+        print (features)
+
+        actions = []
+
+        print (actions)
+
+        break
+
 
     # Go to first hour on vent
     # if invasive == 0 and noninvasive == 0:
