@@ -1,13 +1,15 @@
 import os
 import csv
+from config import *
 
-datapath = './data'
+# DATAPATH = './data'
 
-def getFiles(datapath):
+def getFiles(DATAPATH):
 
     files = []
 
-    for dirpath, dirnames, filenames in os.walk(datapath):        
+    for dirpath, dirnames, filenames in os.walk(DATAPATH
+):        
         for dirname in dirnames:
             getFiles(dirname)
         dirpath = dirpath.replace('\\', '/')
@@ -17,7 +19,7 @@ def getFiles(datapath):
 
     return files
 
-filelist = getFiles(datapath)
+filelist = getFiles(DATAPATH)
 
 # Headers
 # 0 hr - HOUR
@@ -274,6 +276,8 @@ for fname in filelist:
             break
         ventilated = (invasive + noninvasive != 0)
 
+    hours_on_vent = 0
+
     if ventilated:
         print(fname)
     
@@ -285,7 +289,7 @@ for fname in filelist:
 
         print (features)
 
-        actions = []
+        actions = [vasopressor, set_rr, set_tv, set_fio2, set_pc]
 
         print (actions)
 
