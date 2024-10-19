@@ -1,0 +1,119 @@
+
+
+# Headers
+# 0 hr - HOUR
+# 1 subject_id
+# 2 hadm_id
+# 3 stay_id
+# 4 intime
+# 5 outtime
+# 6 invasive
+# 7 noninvasive
+# 8 highflow
+# 9 discharge_outcome
+# 10 icuouttime_outcome
+# 11 death_outcome
+# 12 elixhauser_vanwalraven
+# 13 gcs
+# 14 gcs_motor
+# 15 gcs_verbal
+# 16 gcs_eyes
+# 17 gcs_unable
+# 18 gender
+# 19 anchor_age
+# 20 anchor_year
+# 21 insurance
+# 22 language
+# 23 marital_status
+# 24 race
+# 25 first_careunit
+# 26 los
+# 27 pinsp_draeger
+# 28 pinsp_hamilton
+# 29 ppeak
+# 30 set_peep
+# 31 total_peep
+# 32 pcv_level
+# 33 rr
+# 34 set_rr
+# 35 total_rr
+# 36 set_tv
+# 37 total_tv
+# 38 set_fio2
+# 39 set_ie_ratio
+# 40 set_pc_draeger
+# 41 set_pc
+# 42 height_inch
+# 43 pbw_kg
+# 44 calculated_bicarbonate
+# 45 pCO2
+# 46 pH
+# 47 pO2
+# 48 so2
+# 49 vasopressor
+# 50 crrt
+# 51 heart_rate
+# 52 sbp
+# 53 dbp
+# 54 mbp
+# 55 sbp_ni
+# 56 dbp_ni
+# 57 mbp_ni
+# 58 temperature
+# 59 spo2
+# 60 glucose
+# 61 sepsis3
+# 62 sofa_24hours
+
+#FEATURES
+
+#Static State
+# 18 gender 0 F / 1 M
+# 19 anchor_age
+# 24 race - maybe categorical?
+# 42 height_inch
+# 43 pbw_kg
+
+#Dynamic State
+# 0 hr
+# 9 discharge_outcome
+# 10 icuouttime_outcome
+# 11 death_outcome
+# 12 elixhauser_vanwalraven
+# 13 gcs
+# 14 gcs_motor
+# 15 gcs_verbal
+# 16 gcs_eyes
+# 29 ppeak
+# 30 set_peep
+# 31 total_peep
+# 32 pcv_level
+# 33 rr
+# 35 total_rr
+# 37 total_tv
+# 45 pCO2
+# 46 pH
+# 47 pO2
+# 48 so2
+# 49 vasopressor
+# 50 crrt
+# 51 heart_rate
+# 52 sbp
+# 53 dbp
+# 54 mbp
+# 58 temperature
+# 59 spo2
+# 60 glucose
+# 61 sepsis3
+# 62 sofa_24hours
+
+#ACTIONS
+# 6 invasive
+# 7 noninvasive
+# 8 highflow
+# 30 set_peep
+# 34 set_rr
+# 36 set_tv
+# 38 set_fio2
+# 39 set_ie_ratio
+# 41 set_pc
