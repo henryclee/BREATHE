@@ -281,7 +281,7 @@ for fname in filelist:
 
         print (static_states)
 
-        features = [heart_rate, mbp, spo2 , gcs, elixhauser_vanwalraven, ]
+        features = [heart_rate, mbp, spo2 , gcs, elixhauser_vanwalraven]
 
         print (features)
 
