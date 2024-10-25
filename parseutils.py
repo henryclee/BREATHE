@@ -3,6 +3,18 @@ import csv
 from config import *
 import pickle
 
+# Stats dictionary, so we can refer to stats by name instead of index #
+sd = {}
+slist = ['hr', 'invasive', 'noninvasive', 'highflow', 'discharge', 'icuout', 'death', 
+        'elix_van', 'gcs', 'gcs_motor', 'gcs_verbal', 'gcs_eyes', 'gender', 'age', 'anchor_year', 'race', 
+        'first_careunit', 'los', 'pinsp_draeger', 'pinsp_hamilton', 'ppeak', 'set_peep', 'total_peep', 'pcv_level', 'rr', 'set_rr',
+        'total_rr', 'set_tv', 'total_tv', 'set_fio2', 'set_ie_ratio', 'set_pc_draeger', 'set_pc', 'height', 'weight', 
+        'calculated_bicarbonate', 'pCO2', 'pH', 'pO2', 'so2', 'vasopressor', 'crrt', 'heart_rate', 'sbp', 'dbp', 'mbp', 'temperature',
+        'spo2', 'glucose', 'sepsis3', 'sofa']
+
+for i,v in enumerate(slist):
+    sd[v] = i
+
 
 def getval(val):
     if val:
@@ -94,9 +106,9 @@ def cleanRow(row: list):
             calculated_bicarbonate, pCO2, pH, pO2, so2, vasopressor, crrt, heart_rate, sbp, dbp, mbp, temperature,
             spo2, glucose, sepsis3, sofa]
 
-def validStats(stats, sd):
+def validStats(stats):
     reqStats = ['gcs', 'gender', 'age', 'race', 'set_peep', 'set_rr', 'set_tv', 'set_fio2', 'height', 'weight', 
-            'vasopressor', 'heart_rate', 'mbp', 'spo2']
+            'vasopressor', 'heart_rate', 'mbp', 'spo2', 'sofa']
     # valid = True
     for s in reqStats:
         i = sd[s]
@@ -106,23 +118,23 @@ def validStats(stats, sd):
             return False
     return True
 
-def getStatic(stats,sd):
-    static_state = ['gender', 'age', 'height', 'weight']
+def getStatic(stats):
+    static_state = ['gender', 'age', 'height', 'weight', 'race']
     state = []
     for s in static_state:
         i = sd[s]
         state.append(stats[i])
     return state
 
-def getDynamic(stats,sd):
-    dynamic_state = ['heart_rate', 'mbp', 'spo2', 'gcs', 'invasive', 'death']
+def getDynamic(stats):
+    dynamic_state = ['heart_rate', 'mbp', 'spo2', 'gcs', 'sofa', 'invasive','death']
     state = []
     for s in dynamic_state:
         i = sd[s]
         state.append(stats[i])
     return state
 
-def getAction(stats,sd):
+def getAction(stats):
     actionlist = ['set_peep', 'set_rr', 'set_tv', 'set_fio2', 'vasopressor']
     action = []
     for a in actionlist:
@@ -130,7 +142,7 @@ def getAction(stats,sd):
         action.append(stats[i])    
     return action
 
-def terminate(stats,sd):
+def terminate(stats):
     terminal1 = ['death']
     terminal0 = ['invasive']
     for s in terminal1:
