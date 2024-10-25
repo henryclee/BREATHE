@@ -63,7 +63,7 @@ for fname in filelist:
 
 
     # Wait until we get valid stats
-    while not p.validStats(stats,sd):
+    while not p.validStats(stats):
         # Readline
         try:
             row = next(reader)
@@ -74,7 +74,7 @@ for fname in filelist:
         except StopIteration:
             break
 
-    if not p.validStats(stats,sd):
+    if not p.validStats(stats):
         continue
 
     # Should have valid stats from here on out
@@ -90,9 +90,9 @@ for fname in filelist:
             cleanline = p.cleanRow(row)
             nextstats = [new if new is not None else orig for orig, new in zip(stats, cleanline)]
             # State, Action, (Reward will be calculated later), Next_State
-            episode_data.append([p.getStatic(stats, sd), p.getDynamic(stats,sd), p.getAction(stats,sd), p.getDynamic(nextstats, sd)])
+            episode_data.append([p.getStatic(stats), p.getDynamic(stats), p.getAction(stats), p.getDynamic(nextstats)])
             stats = nextstats
-            if p.terminate(stats, sd):
+            if p.terminate(stats):
                 done = True
         except StopIteration:
             break
@@ -125,6 +125,9 @@ for fname in filelist:
     if dead:
         episode_data[-1][-1][-1] = 1
 
+    print(fname)
+    for h in episode_data:
+        print(h)
     data.append(episode_data)
 
 print(f"Collected data from {len(data)} patients")

@@ -8,53 +8,81 @@ import time
 import numpy as np
 from parameters import *
 from collections import defaultdict
+import statistics
+import matplotlib.pyplot as plt
+import sys
 
-with open ('./data_small.pkl', 'rb') as pkl:
-    dataset = pickle.load(pkl)
 
-peep_stats = defaultdict(int)
-rr_stats = defaultdict(int)
-tv_stats = defaultdict(int)
-fio2_stats = defaultdict(int)
+def get_boundaries(fp):
 
-for patient_course in dataset:
-    print("new patient")
-    for hour_stats in patient_course:
-        static_state, dynamic_state, actions, next_state = hour_stats
-        set_peep, set_rr, set_tv, set_fio2, vasopressor = actions
-        peep_stats[set_peep] += 1
-        rr_stats[set_rr] += 1
-        tv_stats[set_tv] += 1
-        fio2_stats[set_fio2] += 1
-        print(hour_stats)
+    with open (fp, 'rb') as pkl:
+        dataset = pickle.load(pkl)
 
-peep_vals = sorted(peep_stats.keys())
-rr_vals = sorted(rr_stats.keys())
-tv_vals = sorted(tv_stats.keys())
-fio2_vals = sorted(fio2_stats.keys())
+    peeplist = []
+    rrlist = []
+    tvlist = []
+    fio2list = []
 
-# print("PEEP")
-# for p in peep_vals:
-#     print(p, peep_stats[p])
+    for episode in dataset:
+        for step in episode:
+            sstate, dstate, action, nstate = step
+            peep, rr, tv, fio2, _ = action
+            peeplist.append(peep)
+            rrlist.append(rr)
+            tvlist.append(tv)
+            fio2list.append(fio2)
 
-# print("RR")
-# for r in rr_vals:
-#     print(r, rr_stats[r])
+    peeplist = np.array(peeplist)
+    rrlist = np.array(rrlist)
+    tvlist = np.array(tvlist)
+    fio2list = np.array(fio2list)
 
-# print("TV")
-# for t in tv_vals:
-#     print(t, tv_stats[t])
+    with open('./boundaries.txt', 'w') as b:
+        b.write(f"Total hours: {len(peeplist)}\n")
+        b.write("PEEP\n")
+        p33 = np.percentile(peeplist,33)
+        b.write(f"33 percentile {p33}\n")
+        b.write(f"Values below {np.sum(peeplist < p33)}\n")
+        p67 = np.percentile(peeplist,67)
+        b.write(f"67 percentile {p67}\n")
+        b.write(f"values above {np.sum(peeplist > p67)}\n")
+        b.write(f"values between: {np.sum((p33 <= peeplist) & (peeplist <= p67))}\n")
 
-# print("FIO2")
-# for f in fio2_vals:
-#     print(f, fio2_stats[f])
+        b.write("rr\n")
+        p33 = np.percentile(rrlist,33)
+        b.write(f"33 percentile {p33}\n")
+        b.write(f"Values below {np.sum(rrlist < p33)}\n")
+        p67 = np.percentile(rrlist,67)
+        b.write(f"67 percentile {p67}\n")
+        b.write(f"Values above {np.sum(rrlist > p67)}\n")
+        b.write(f"Values between: {np.sum((p33 <= rrlist) & (rrlist <= p67))}\n")
 
-# actionstats = {
-#     "PEEP": peep_stats,
-#     "RR": rr_stats,
-#     "TV": tv_stats,
-#     "FIO2": fio2_stats
-# }
+        b.write("tv\n")
+        p33 = np.percentile(tvlist,33)
+        b.write(f"33 percentile {p33}\n")
+        b.write(f"Values below {np.sum(tvlist < p33)}\n")
+        p67 = np.percentile(tvlist,67)
+        b.write(f"67 percentile {p67}\n")
+        b.write(f"Values above {np.sum(tvlist > p67)}\n")
+        b.write(f"Values between: {np.sum((p33 <= tvlist) & (tvlist <= p67))}\n")
 
-# with open('./action_stats.pkl', 'wb') as f:
-#     pickle.dump(actionstats, f)
+        b.write("fio2\n")
+        p33 = np.percentile(fio2list,33)
+        b.write(f"33 percentile {p33}\n")
+        b.write(f"Values below {np.sum(fio2list < p33)}\n")
+        p67 = np.percentile(fio2list,67)
+        b.write(f"67 percentile {p67}\n")
+        b.write(f"Values above {np.sum(fio2list > p67)}\n")
+        b.write(f"Values between: {np.sum((p33 <= fio2list) & (fio2list <= p67))}\n")
+
+
+if __name__ == "__main__":
+    
+    if len(sys.argv) < 2:
+        print("Need filepath")
+        sys.exit(1)
+
+    fp = sys.argv[1]
+
+    get_boundaries(fp)
+    
