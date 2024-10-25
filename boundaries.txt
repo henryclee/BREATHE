@@ -1,0 +1,25 @@
+Total hours: 842235
+PEEP
+33 percentile 5.0
+Values below 15980
+67 percentile 8.0
+values above 233102
+values between: 593153
+rr
+33 percentile 16.0
+Values below 252465
+67 percentile 20.0
+Values above 218814
+Values between: 370956
+tv
+33 percentile 400.0
+Values below 165400
+67 percentile 500.0
+Values above 116780
+Values between: 560055
+fio2
+33 percentile 40.0
+Values below 116016
+67 percentile 50.0
+Values above 119629
+Values between: 606590
