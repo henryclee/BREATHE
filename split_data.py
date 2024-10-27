@@ -13,6 +13,10 @@ import sys
 with open('./data/processed.pkl', 'rb') as f:
     processed = pickle.load(f)
 
+print(len(processed))
+print(processed[0])
+
+
 #Split into training, validation, and test sets, we'll do 80/10/10
 train_fraction = .8
 validation_fraction = .1

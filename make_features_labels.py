@@ -66,4 +66,5 @@ for datatype in datasets:
         data = pickle.load(f)
     makeGeneratorData(data, f'{path}generator_{datatype}_features.pkl', f'{path}generator_{datatype}_labels.pkl')
     makePredictorData(data, f'{path}predictor_{datatype}_features.pkl', f'{path}predictor_{datatype}_labels.pkl')
-    makeReplayBuffer(data, f'{path}replaybuffer_{datatype}.pkl') # Only the training buffer will be used
+
+makeReplayBuffer(data, f'{path}replaybuffer_train.pkl') # Only the training buffer will be used
