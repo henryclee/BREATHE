@@ -29,3 +29,52 @@ HITV = 500
 LOTV = 400
 HIO2 = 50
 LOO2 = 40
+
+# Define state, action, reward, next state
+cols = ['gender', 'age', 'height', 'weight', 
+        'hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1',
+        'hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2',
+        'hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3',
+        'hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4',
+        'action', 'reward',
+        'hrn', 'mbpn', 'spo2n', 'gcsn', 'sofan', 'invasiven','deathn']
+
+# State
+statecols = ['gender', 'age', 'height', 'weight', 
+        'hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1',
+        'hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2',
+        'hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3',
+        'hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4']
+# Static state
+sstatecols = ['gender', 'age', 'height', 'weight']
+# Dynamic state
+dstatecols = ['hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1',
+              'hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2',
+              'hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3',
+              'hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4']
+dstatecols1 = ['hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1']
+dstatecols2 = ['hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2']
+dstatecols3 = ['hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3']
+dstatecols4 = ['hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4']
+# Action
+actioncols = ['action']
+# Reward
+rewardcols = ['reward']
+# Next state
+nstatecols = ['hrn', 'mbpn', 'spo2n', 'gcsn', 'sofan', 'invasiven','deathn']
+# Done
+donecols = ['invasiven']
+
+STATEIDX = [cols.index(v) for v in statecols]
+SSTATEIDX = [cols.index(v) for v in sstatecols]
+DSTATEIDX = [cols.index(v) for v in dstatecols]
+DSTATEIDX1 = [cols.index(v) for v in dstatecols1]
+DSTATEIDX2 = [cols.index(v) for v in dstatecols2]
+DSTATEIDX3 = [cols.index(v) for v in dstatecols3]
+DSTATEIDX4 = [cols.index(v) for v in dstatecols4]
+ACTIONIDX = [cols.index(v) for v in actioncols]
+REWARDIDX = [cols.index(v) for v in rewardcols]
+NSTATEIDX = [cols.index(v) for v in nstatecols]
+DONEIDX = [cols.index(v) for v in donecols]
+
+ACTIONSPACE = 162

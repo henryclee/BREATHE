@@ -13,16 +13,16 @@ from neuralnetworks import Generator, ICUDataset
 import pickle
 import time
 
-with open('./data/generator_validation_features.pkl', 'rb') as f:
+with open('./data/generator_train_features.pkl', 'rb') as f:
     featuredata = pickle.load(f)
 
-with open('./data/generator_validation_labels.pkl', 'rb') as f:
+with open('./data/generator_train_labels.pkl', 'rb') as f:
     labeldata = pickle.load(f)
 
 print(len(featuredata))
 
 dataset = ICUDataset(featuredata, labeldata, labelint = True)
-dataloader = DataLoader(dataset, batch_size = 128, shuffle = True)
+dataloader = DataLoader(dataset, batch_size = 4096, shuffle = True)
 
 net = Generator(features = len(featuredata[0]), output_dim=162)
 criterion = nn.CrossEntropyLoss()
@@ -35,7 +35,7 @@ net.to(device)
 
 start = time.time()
 
-for epoch in range(5):
+for epoch in range(10_000):
 
     running_loss = 0.0
     for i, (features, labels) in enumerate(dataloader):
@@ -54,10 +54,13 @@ for epoch in range(5):
 
         # print statistics
         running_loss += loss.item()
-        if i % 100 == 99:    # print every 1000 mini-batches
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 100:.3f}')
-            running_loss = 0.0
+
+    if epoch % 1000 == 999:
+        print(f'[{epoch + 1}] loss: {running_loss / 1000:.3f}')
+        torch.save(net.state_dict(), './models/generator.pth')
 
 end = time.time()
 
 print(f'Finished Training in {end - start} seconds')
+
+torch.save(net.state_dict(), './models/generator.pth')
