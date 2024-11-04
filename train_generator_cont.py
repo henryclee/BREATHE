@@ -25,6 +25,7 @@ dataset = ICUDataset(featuredata, labeldata, labelint = True)
 dataloader = DataLoader(dataset, batch_size = 4096, shuffle = True)
 
 net = Generator(features = len(featuredata[0]), output_dim=162)
+net.load_state_dict(torch.load('./models/generator.pth'))
 criterion = nn.CrossEntropyLoss()
 # optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 optimizer = optim.Adam(net.parameters(), lr = 0.001)

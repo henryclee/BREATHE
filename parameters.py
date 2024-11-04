@@ -20,15 +20,22 @@ WINDOW_SIZE = 4
 # Discount factor
 DF = .95
 
-# Boundaries for actions
-HIPEEP = 8
-LOPEEP = 5
-HIRR = 20
-LORR = 16
-HITV = 500
-LOTV = 400
-HIO2 = 50
-LOO2 = 40
+# Boundaries for actions v1 - 162 states -- too big
+# HIPEEP = 8
+# LOPEEP = 5
+# HIRR = 20
+# LORR = 16
+# HITV = 500
+# LOTV = 400
+# HIO2 = 50
+# LOO2 = 40
+
+# Boundaries for actions v2 - 
+
+
+
+
+
 
 # Define state, action, reward, next state
 cols = ['gender', 'age', 'height', 'weight', 

@@ -6,6 +6,9 @@ import parseutils as p
 import time
 
 
+# Go through all of the MIMIC files, and convert into a list of episodes
+# Each episode will be 4 lists - [static state] [dynamic state] [action] [next dynamic state]
+
 with open("filelist.pkl", 'rb') as f:
     filelist = pickle.load(f)
 
@@ -59,8 +62,6 @@ for fname in filelist:
     if not ventilated:
         # print(fname, "not ventilated")
         continue
-
-
 
     # Wait until we get valid stats
     while not p.validStats(stats):

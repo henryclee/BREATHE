@@ -127,7 +127,8 @@ def getStatic(stats):
     return state
 
 def getDynamic(stats):
-    dynamic_state = ['heart_rate', 'mbp', 'spo2', 'gcs', 'sofa', 'invasive','death']
+    # dynamic_state = ['heart_rate', 'mbp', 'spo2', 'gcs', 'sofa', 'invasive','death']
+    dynamic_state = ['heart_rate', 'mbp', 'spo2', 'vasopressor', 'gcs', 'sofa', 'invasive','death']
     state = []
     for s in dynamic_state:
         i = sd[s]
@@ -135,7 +136,8 @@ def getDynamic(stats):
     return state
 
 def getAction(stats):
-    actionlist = ['set_peep', 'set_rr', 'set_tv', 'set_fio2', 'vasopressor']
+    # actionlist = ['set_peep', 'set_rr', 'set_tv', 'set_fio2', 'vasopressor']
+    actionlist = ['set_peep', 'set_rr', 'set_tv', 'set_fio2']
     action = []
     for a in actionlist:
         i = sd[a]
