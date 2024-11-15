@@ -27,6 +27,8 @@ predictNet = DDQN(len(STATEIDX), ACTIONSPACE)
 targetNet = DDQN(len(STATEIDX), ACTIONSPACE)
 generator = Generator(len(STATEIDX), ACTIONSPACE)
 
+generator.load_state_dict(torch.load('./models/generator.pth'))
+
 criterion = nn.MSELoss()
 optimizer = optim.Adam(predictNet.parameters(), lr = 0.001)
 
@@ -92,8 +94,8 @@ for epoch in range(5):
 
         # print statistics
         running_loss += loss.item()
-        if i % 1000 == 999:    # print every 1000 mini-batches
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 1000:.3f}')
+        if i % 100 == 99:    # print every 1000 mini-batches
+            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 100:.3f}')
             running_loss = 0.0
 
 

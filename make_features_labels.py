@@ -10,19 +10,20 @@ from collections import deque
 from parameters import *
 import sys
 
-cols = ['gender', 'age', 'height', 'weight', 
-        'hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1',
-        'hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2',
-        'hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3',
-        'hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4',
-        'action', 'reward',
-        'hrn', 'mbpn', 'spo2n', 'gcsn', 'sofan', 'invasiven','deathn']
+# cols = ['gender', 'age', 'height', 'weight', 
+#         'hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1',
+#         'hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2',
+#         'hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3',
+#         'hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4',
+#         'action', 'reward',
+#         'hrn', 'mbpn', 'spo2n', 'gcsn', 'sofan', 'invasiven','deathn']
 
-statecols = ['gender', 'age', 'height', 'weight', 
-        'hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1',
-        'hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2',
-        'hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3',
-        'hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4']
+# statecols = ['gender', 'age', 'height', 'weight', 
+#         'hr1', 'mbp1', 'spo21', 'gcs1', 'sofa1', 'invasive1','death1',
+#         'hr2', 'mbp2', 'spo22', 'gcs2', 'sofa2', 'invasive2','death2',
+#         'hr3', 'mbp3', 'spo23', 'gcs3', 'sofa3', 'invasive3','death3',
+#         'hr4', 'mbp4', 'spo24', 'gcs4', 'sofa4', 'invasive4','death4']
+
 stateidx = [cols.index(v) for v in statecols]
 
 actioncols = ['action']
@@ -68,3 +69,5 @@ for datatype in datasets:
     makePredictorData(data, f'{path}predictor_{datatype}_features.pkl', f'{path}predictor_{datatype}_labels.pkl')
 
 makeReplayBuffer(data, f'{path}replaybuffer_train.pkl') # Only the training buffer will be used
+
+print("finished")

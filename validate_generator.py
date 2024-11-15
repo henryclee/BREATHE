@@ -7,6 +7,7 @@ import gymnasium as gym
 from neuralnetworks import Generator, ICUDataset
 import pickle
 import time
+from parameters import *
 
 with open('./data/generator_validation_features.pkl', 'rb') as f:
     featuredata = pickle.load(f)
@@ -14,7 +15,7 @@ with open('./data/generator_validation_features.pkl', 'rb') as f:
 with open('./data/generator_validation_labels.pkl', 'rb') as f:
     labeldata = pickle.load(f)
 
-net = Generator(features = len(featuredata[0]), output_dim=162)
+net = Generator(features = len(featuredata[0]), output_dim=ACTIONSPACE)
 net.load_state_dict(torch.load('./models/generator.pth'))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 net.to(device)
@@ -34,12 +35,14 @@ with torch.no_grad():
         outputs = net(features)
 
         _, predicted = torch.max(outputs, 1)
+        # print("predicted", predicted[:10])
+        # print("labels", labels[:10])
         
         correct += (predicted == labels).sum().item()
         total += labels.size(0)
 
 end = time.time()
-
+print(correct, total)
 print(correct / total)
 
-print(f'Finished Training in {end - start} seconds')
+print(f'Finished Validation in {end - start} seconds')

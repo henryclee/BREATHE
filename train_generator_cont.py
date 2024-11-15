@@ -12,6 +12,8 @@ from optuna.trial import TrialState
 from neuralnetworks import Generator, ICUDataset
 import pickle
 import time
+from parameters import *
+
 
 with open('./data/generator_train_features.pkl', 'rb') as f:
     featuredata = pickle.load(f)
@@ -24,7 +26,7 @@ print(len(featuredata))
 dataset = ICUDataset(featuredata, labeldata, labelint = True)
 dataloader = DataLoader(dataset, batch_size = 4096, shuffle = True)
 
-net = Generator(features = len(featuredata[0]), output_dim=162)
+net = Generator(features = len(featuredata[0]), output_dim=ACTIONSPACE)
 net.load_state_dict(torch.load('./models/generator.pth'))
 criterion = nn.CrossEntropyLoss()
 # optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
@@ -56,8 +58,9 @@ for epoch in range(10_000):
         # print statistics
         running_loss += loss.item()
 
-    if epoch % 200 == 199:
-        print(f'[{epoch + 1}] loss: {running_loss / 200:.3f}')
+    if epoch % 100 == 99:
+        print(f'[{epoch + 1}] loss: {running_loss / 100:.3f}')
+        running_loss = 0.0
         torch.save(net.state_dict(), './models/generator.pth')
 
 end = time.time()

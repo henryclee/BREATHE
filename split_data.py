@@ -18,6 +18,7 @@ print(processed[0])
 
 
 #Split into training, validation, and test sets, we'll do 80/10/10
+
 train_fraction = .8
 validation_fraction = .1
 
@@ -37,3 +38,5 @@ with open('./data/validationset.pkl', 'wb') as f:
 
 with open('./data/testset.pkl', 'wb') as f:
     pickle.dump(testset,f)
+
+print("finished")

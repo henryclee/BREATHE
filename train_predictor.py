@@ -37,7 +37,7 @@ net.to(device)
 
 start = time.time()
 
-for epoch in range(5):
+for epoch in range(10000):
 
     running_loss = 0.0
     for i, (features, labels) in enumerate(dataloader):
@@ -60,10 +60,14 @@ for epoch in range(5):
 
         # print statistics
         running_loss += loss.item()
-        if i % 100 == 99:    # print every 1000 mini-batches
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 100:.3f}')
-            running_loss = 0.0
+
+    if epoch % 100 == 99:    # print every 1000 mini-batches
+        print(f'[{epoch + 1}] loss: {running_loss / 100:.3f}')
+        running_loss = 0.0
+        torch.save(net.state_dict(), './models/predictor.pth')
 
 end = time.time()
+
+torch.save(net.state_dict(), './models/predictor.pth')
 
 print(f'Finished Training in {end - start} seconds')

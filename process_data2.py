@@ -59,44 +59,38 @@ def identical(dstateq, nstate):
             return False
     return True
 
-# Get action, as 1 of 162 possible states
+# Get action, as 1 of 24 states
+# hi/lo peep, hi/lo rr, hi/lo o2, tv low/med/hi
 def getAction(actionlist):
     action = 0
-    peep, rr, tv, fio2, vaso = actionlist
+    peep, rr, tv, fio2 = actionlist
     # Encode peep
     if peep > HIPEEP:
-        action =  2
-    elif peep >= LOPEEP:
-        action = 1
-    action *= 3
+        action =  1
+    else:
+        action = 0
     
     # Encode rr
     if rr > HIRR:
-        action += 2
-    elif rr >= LORR:
-        action += 1
-    action *= 3
-
-    # Encode tv
-    if tv > HITV:
-        action += 2
-    elif tv >= LOTV:
-        action += 1
-    action *= 3
+        action += 1 * 2
+    else:
+        action += 0
 
     # Encode fio2
     if fio2 > HIO2:
-        action += 2
-    elif fio2 >= LOO2:
-        action += 1
-    action *= 2
+        action += 1 * 4
+    else: 
+        action += 0
 
-    # Encode vaso (0 or 1)
-    action += vaso
+        # Encode tv
+    if tv > HITV:
+        action += 2 * 8
+    elif tv >= LOTV:
+        action += 1 * 8
     
     return action
 
-# Processed state will be currentstate [static + 4 dynamic_states] = 4 + 7*4, action = 1, next_state 7
+# Processed state will be currentstate [static + 4 dynamic_states] = 4 + 8*4, action = 1, next_state 7
 def process_data(fp):
 
     with open (fp, 'rb') as pkl:
@@ -137,17 +131,18 @@ def process_data(fp):
 
     processed = np.array(processed)
 
-    with open('./processed.pkl', 'wb') as pf:
+    with open('./data/processed.pkl', 'wb') as pf:
         pickle.dump(processed, pf)    
 
 
 #Data.pkl
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    if len(sys.argv) < 2:
-        print("Need filepath")
-        sys.exit(1)
+#     if len(sys.argv) < 2:
+#         print("Need filepath")
+#         sys.exit(1)
 
-    fp = sys.argv[1]
+#     fp = sys.argv[1]
 
-    process_data(fp)
+process_data("./data/data.pkl")
+print("finished")
