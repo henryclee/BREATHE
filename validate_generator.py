@@ -26,7 +26,10 @@ dataloader = DataLoader(dataset, batch_size = 4096, shuffle = True)
 
 start = time.time()
 
+k = 4
+
 correct = 0
+kcorrect = 0
 total = 0
 with torch.no_grad():
     for i, (features, labels) in enumerate(dataloader):
@@ -35,14 +38,17 @@ with torch.no_grad():
         outputs = net(features)
 
         _, predicted = torch.max(outputs, 1)
-        # print("predicted", predicted[:10])
-        # print("labels", labels[:10])
-        
         correct += (predicted == labels).sum().item()
+
+        topk_values, topk_indices = torch.topk(outputs, k)
+        kcorrect += (topk_indices == labels.view(-1, 1)).sum().item()
+
         total += labels.size(0)
+
 
 end = time.time()
 print(correct, total)
-print(correct / total)
+print("accurracy", correct / total)
+print("k accuracy", kcorrect / total)
 
 print(f'Finished Validation in {end - start} seconds')
